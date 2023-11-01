@@ -19,11 +19,11 @@ public class EmployeeService1 implements EmployeeService{
     public  Employee add(String name,String lastname)throws EmployeeStorageIsFullException,EmployeeAlreadyAddedException{
         Employee a = new Employee(name,lastname);
         if (people.size()>=value){
-            throw new EmployeeStorageIsFullException("Храналище полное");
+            throw new EmployeeStorageIsFullException();
 
         }
         if (people.contains(a)){
-            throw new EmployeeAlreadyAddedException("Такой сотрудник уже добавлен");
+            throw new EmployeeAlreadyAddedException();
         }
         people.add(a);
         return a;
@@ -31,17 +31,19 @@ public class EmployeeService1 implements EmployeeService{
     @Override
     public  Employee remove(String name,String lastname)throws EmployeeNotFoundException{
         Employee a = new Employee(name,lastname);
-        if (!people.contains(a)){
-            throw new EmployeeNotFoundException("Сотрудник не найден");
+        if (people.contains(a)){
+            people.remove(a);
+            return a;
+
         }
-        people.remove(a);
-        return a;
+        throw new EmployeeNotFoundException();
+
     }
     @Override
     public  Employee search(String name,String lastname)throws EmployeeNotFoundException{
         Employee a = new Employee(name,lastname);
         if (!people.contains(a)){
-            throw new EmployeeNotFoundException("Сотрудник не найден");
+            throw new EmployeeNotFoundException();
         }
         return a;
 
